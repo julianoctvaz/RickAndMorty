@@ -5,12 +5,13 @@
 //  Created by Jamerson Macedo on 16/08/24.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 import Combine
+
 class RickAndMortyService {
     // retorna o character responsa sem ser [], pois aqui retorna tudo de uma vez
-    func getAllCaracters(page : Int)->AnyPublisher<[Character],Error> {
+    func getAllCaracters(page :Int) -> AnyPublisher<[Character],Error> {
         let url = "https://rickandmortyapi.com/api/character?page=\(page)"
         //validate me confirma se o codifo foi entre 200 e 299
         return URLSession.shared.dataTaskPublisher(for: URL(string: url)!) // datatask para requisiçÕes com combine

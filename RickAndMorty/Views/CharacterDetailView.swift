@@ -6,12 +6,16 @@
 //
 
 // CharacterDetailView.swift
+
+import Foundation
 import SwiftUI
 import SwiftData
 
 struct CharacterDetailView: View {
+    
     @ObservedObject var viewModel: CharacterDetailViewModel
     @Environment (\.modelContext) private var modelContext
+    
     var body: some View {
         ZStack {
             // Fundo gradiente cobrindo toda a tela
@@ -75,19 +79,13 @@ struct CharacterDetailView: View {
                             Text("Apareceu em \(viewModel.character.episode.count) episódio(s)")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                            
-                           
                         }
-                        
-                        
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(Color.white.opacity(0.1))
                         )
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                        
-                        
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 20)
@@ -108,10 +106,7 @@ struct CharacterDetailView: View {
                 }
                 }
             }
-        
         .navigationBarTitleDisplayMode(.inline)
-        
-        
     }
     
     // Cor do status

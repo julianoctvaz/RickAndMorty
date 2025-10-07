@@ -5,7 +5,6 @@
 //  Created by Jamerson Macedo on 24/08/24.
 //
 
-import Foundation
 // RESPOSTA DA API
 
 struct CharacterResponseDTO: Decodable {

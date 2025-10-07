@@ -6,7 +6,8 @@
 //
 
 import Foundation
-extension Date{
+
+extension Date {
     func formattedDate(from dateString : String) ->String{
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions=[.withInternetDateTime,.withFractionalSeconds]

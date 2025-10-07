@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AE15A972C8124750041A7E0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3AE15A962C8124750041A7E0 /* Alamofire */; };
 		CF422F1B2C6FF6950099BAA8 /* RickAndMortyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF422F1A2C6FF6950099BAA8 /* RickAndMortyApp.swift */; };
 		CF422F1D2C6FF6950099BAA8 /* RickAndMortyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF422F1C2C6FF6950099BAA8 /* RickAndMortyView.swift */; };
 		CF422F1F2C6FF6960099BAA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF422F1E2C6FF6960099BAA8 /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AE15A972C8124750041A7E0 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +171,7 @@
 			);
 			name = RickAndMorty;
 			packageProductDependencies = (
+				3AE15A962C8124750041A7E0 /* Alamofire */,
 			);
 			productName = RickAndMorty;
 			productReference = CF422F172C6FF6950099BAA8 /* RickAndMorty.app */;
@@ -199,6 +202,7 @@
 			);
 			mainGroup = CF422F0E2C6FF6950099BAA8;
 			packageReferences = (
+				3AE15A952C8124750041A7E0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = CF422F182C6FF6950099BAA8 /* Products */;
 			projectDirPath = "";
@@ -376,7 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
-				DEVELOPMENT_TEAM = L5U287N3KD;
+				DEVELOPMENT_TEAM = 2QC8C374PG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -406,7 +410,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
-				DEVELOPMENT_TEAM = L5U287N3KD;
+				DEVELOPMENT_TEAM = 2QC8C374PG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -450,6 +454,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3AE15A952C8124750041A7E0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3AE15A962C8124750041A7E0 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3AE15A952C8124750041A7E0 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CF422F0F2C6FF6950099BAA8 /* Project object */;
 }

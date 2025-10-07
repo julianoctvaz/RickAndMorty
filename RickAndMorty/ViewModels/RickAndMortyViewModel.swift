@@ -5,23 +5,28 @@
 //  Created by Jamerson Macedo on 16/08/24.
 //
 
-import Foundation
 import Combine
-class RickAndMortyViewModel : ObservableObject{
+import Foundation
+
+class RickAndMortyViewModel: ObservableObject{
     // quando o viewmodel tem a referencia do service eles criam uma referencia forte
-    // e se a viewfechar o viewmodel sai e a referencia e perdida, por isso usa weal self
-    @Published var characters  = [Character]()
+    // e se a viewfechar o viewmodel sai e a referencia e perdida, por isso usa weak self
+    @Published var characters = [Character]()
     @Published var isloading = false
-    @Published var errorMessage :String? = nil
-    @Published var selectedCharacter : Character?
+    @Published var errorMessage: String? = nil
+    @Published var selectedCharacter: Character?
     
     // para gerenciar o ciclo de vida
     // evitando vazamento de memoria
     private  var cancelable = Set<AnyCancellable>()
     // instancia do service
-    private let service : RickAndMortyService
+    private let service: RickAndMortyService
     // paginação
     private var currentPage = 1
+    
+    private var canLoadMoreCharacters: Bool {
+        !isloading
+    }
     
     init(service: RickAndMortyService){
         self.service = service
@@ -47,16 +52,15 @@ class RickAndMortyViewModel : ObservableObject{
         
 
     }
-    func loadMoreCharacters( currentItem : Character?){
+    func loadMoreCharacters( currentItem: Character?) {
         guard shouldLoadMore(currentItem:currentItem) else {return}
         fetchCharacters()
     }
-    private var canLoadMoreCharacters:Bool{
-        !isloading
-    }
-    private func handleError(_ error : Error){
+    
+    private func handleError(_ error : Error) {
         errorMessage = error.localizedDescription
     }
+    
     private func shouldLoadMore(currentItem:Character?)->Bool{
         // tem o item ? então carregue
         guard let currentItem = currentItem else {return true }

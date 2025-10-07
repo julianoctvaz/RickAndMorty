@@ -5,8 +5,6 @@
 //  Created by Jamerson Macedo on 16/08/24.
 //
 
-import Foundation
-
 // MARK: - Character Model
 
 struct Character: Identifiable, Decodable {

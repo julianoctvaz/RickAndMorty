@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+
 struct RickAndMortyView: View {
     // pra não perder a referencia e ser recriado é melhor usar o StateObject
     // se p viewmodel fosse passado como parametro para a lista ai sim usaria o Observed
@@ -19,7 +20,7 @@ struct RickAndMortyView: View {
     var filteredCharacters : [Character]{
         if searchText.isEmpty{
             return viewmodel.characters
-        }else {
+        } else {
             return viewmodel.characters.filter{$0.name.lowercased().contains(searchText.lowercased())}
         }
     }
