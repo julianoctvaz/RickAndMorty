@@ -38,8 +38,17 @@ struct RickAndMortyView: View {
                                         .frame(width: 150, height: 200)
                                         .background(Color.gray.opacity(0.1))
                                         .cornerRadius(10)
-                                       
                                 })
+                            .simultaneousGesture(TapGesture().onEnded {
+                                AnalyticsService.shared.log(
+                                    event: .characterSelection(.init(
+                                        name: character.name,
+                                        //                                          origin: "RickAndMortyView(list)",
+                                        origin: Screens.home.rawValue,
+                                        date: Date().formatted()
+                                    ))
+                                ) // log
+                            }) //gesto
                             .buttonStyle(PlainButtonStyle())
                             .onAppear {
                                 viewmodel.loadMoreCharacters(currentItem: character)

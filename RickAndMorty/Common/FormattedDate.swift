@@ -21,4 +21,12 @@ extension Date {
         }
         return "DATA INVALIDA"
     }
+    
+    func formatted() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short // ou .none se não quiser hora
+        dateFormatter.locale = Locale(identifier: "pt_BR")
+        return dateFormatter.string(from: self)
+    }
 }

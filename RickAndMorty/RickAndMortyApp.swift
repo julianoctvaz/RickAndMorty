@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+//import FirebaseCore
+ import Firebase
+
 @main
 struct RickAndMortyApp: App {
     // verificando se foi inicalizado com sucesso
@@ -34,15 +37,19 @@ struct RickAndMortyApp: App {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]){ granted, error in
             if let error = error {
                 print(error.localizedDescription)
-            }else {
+            } else {
                 print(granted)
             }
         }
     }
 }
-class AppDelegate : NSObject,UIApplicationDelegate,UNUserNotificationCenterDelegate{
+class AppDelegate: NSObject,UIApplicationDelegate,UNUserNotificationCenterDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    
         UNUserNotificationCenter.current().delegate = self
+        
+        FirebaseApp.configure()
+    
         return true
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
