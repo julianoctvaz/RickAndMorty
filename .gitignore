@@ -1,0 +1,25 @@
+# Xcode
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+.DS_Store
+
+# Swift Packages
+.swiftpm/
+.build/
+Package.resolved
+
+# User data
+RickAndMorty.xcodeproj/xcuserdata/
+RickAndMorty.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Fastlane / TelemetryDeck / etc
+fastlane/
+TelemetryDeckCache/
+
+# Assets locais
+fotos/
+
