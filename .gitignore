@@ -1,0 +1,178 @@
+# =====================================
+# Xcode e macOS
+# =====================================
+
+# Build e temporários
+DerivedData/
+build/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+
+# User data
+xcuserdata/
+RickAndMorty.xcodeproj/xcuserdata/
+RickAndMorty.xcodeproj/project.xcworkspace/xcuserdata/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+.Trashes
+._*
+.Spotlight-V100
+.fseventsd
+
+# =====================================
+# Swift Package Manager / Dependências
+# =====================================
+.swiftpm/
+.build/
+Package.resolved
+
+# =====================================
+# Ferramentas e caches
+# =====================================
+fastlane/
+TelemetryDeckCache/
+TelemetryDeckCache.sqlite
+
+# =====================================
+# Outros
+# =====================================
+*.orig
+*.bak
+*.tmp
+*.temp
+
+# Mantém tudo que é código fonte, assets e configs
+!*.swift
+!*.plist
+!*.json
+!*.xcassets/**
+!*.xcodeproj/**
+!*.storyboard
+!*.xib
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+# =====================================
+# Xcode e macOS
+# =====================================
+
+## Build e intermediários
+build/
+DerivedData/
+*.xcuserstate
+
+## User data e workspaces locais
+*.xcuserdatad
+*.xcscmblueprint
+*.xccheckout
+xcuserdata/
+
+## Project workspace (gera conflito de merge com frequência)
+*.xcworkspace/xcuserdata/
+*.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+## Cache do Swift Package Manager
+.swiftpm/
+.build/
+
+## Arquivos de log e temporários
+*.moved-aside
+*.xcuserstate
+*.swp
+*.lock
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## Ícones e lixeira
+Icon?
+.Trashes
+._*
+.Spotlight-V100
+.DocumentRevisions-V100
+.fseventsd
+
+# =====================================
+# Swift / SwiftData / CloudKit
+# =====================================
+
+## Arquivos gerados pelo CloudKit / CoreData
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.cloudkit
+
+## SwiftData local persistence
+*.swiftdata
+
+# =====================================
+# Ferramentas de terceiros
+# =====================================
+
+## CocoaPods
+Pods/
+Podfile.lock
+
+## Carthage
+Carthage/Build/
+Carthage/Checkouts/
+
+## Swift Package Manager artefatos locais
+Packages/
+Package.resolved
+
+## TelemetryDeck / Metrics locais
+TelemetryDeckCache/
+TelemetryDeckCache.sqlite
+
+## Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+## Xcode Cloud / CI
+.xccovreport
+.xccovarchive
+*.xccoverage
+*.xccresult
+xcresultbundle/
+
+# =====================================
+# Outros arquivos comuns
+# =====================================
+
+## EditorConfig e backups locais
+*.orig
+*.bak
+*~
+*.tmp
+*.temp
+
+## Arquivos de configuração do usuário (segurança)
+*.env
+*.private.*
+Secrets.plist
+GoogleService-Info.plist
+Config.xcconfig
+
+## Testes e snapshots
+*.snapshots
+
