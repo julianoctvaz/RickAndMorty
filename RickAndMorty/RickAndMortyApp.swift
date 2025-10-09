@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+import TelemetryDeck
+
 @main
 struct RickAndMortyApp: App {
     // verificando se foi inicalizado com sucesso
@@ -42,7 +44,14 @@ struct RickAndMortyApp: App {
 }
 class AppDelegate : NSObject,UIApplicationDelegate,UNUserNotificationCenterDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
         UNUserNotificationCenter.current().delegate = self
+        
+        AnalyticsService.initialize(
+            appID: "97C93332-D57B-48DD-A42B-FDF1AF4EEE61",
+            userID: "Michael Joseph Jackson" //será hashado? Vamos ver!
+        )
+        
         return true
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

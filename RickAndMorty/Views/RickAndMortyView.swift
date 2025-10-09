@@ -40,6 +40,20 @@ struct RickAndMortyView: View {
                                         .cornerRadius(10)
                                        
                                 })
+                            .simultaneousGesture(
+                                TapGesture().onEnded(
+                                    {
+                                        AnalyticsService.log(
+                                            event: .characterSelection(
+                                                .init(
+                                                    name: character.name,
+                                                    origin: AnalyticsService.Screen.home.rawValue,
+                                                    date: Date().formatted()
+                                                )
+                                            )
+                                        )
+                                    })
+                            )
                             .buttonStyle(PlainButtonStyle())
                             .onAppear {
                                 viewmodel.loadMoreCharacters(currentItem: character)
