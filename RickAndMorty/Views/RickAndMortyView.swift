@@ -37,9 +37,20 @@ struct RickAndMortyView: View {
                                         .frame(width: 150, height: 200)
                                         .background(Color.gray.opacity(0.1))
                                         .cornerRadius(10)
-                                       
-                                })
+                                }
+                            )
                             .buttonStyle(PlainButtonStyle())
+                            .simultaneousGesture(TapGesture().onEnded {
+                                // Log characterSelection event when the item is tapped
+                                let event = AnalyticsEvent.characterSelection(
+                                    AnalyticsEvent.CharacterSelectedEvent(
+                                        name: character.name,
+                                        origin: character.origin.name,
+                                        date: Date().formatted()
+                                    )
+                                )
+                                AnalyticsService.log(event: event, context: modelContext)
+                            })
                             .onAppear {
                                 viewmodel.loadMoreCharacters(currentItem: character)
                             }
@@ -68,6 +79,6 @@ struct RickAndMortyView: View {
         }
     }
 }
-#Preview {
-    RickAndMortyView(viewmodel: RickAndMortyViewModel(service: RickAndMortyService()))
-}
+//#Preview {
+//    RickAndMortyView(viewmodel: RickAndMortyViewModel(service: RickAndMortyService()))
+//}

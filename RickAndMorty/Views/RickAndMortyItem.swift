@@ -60,6 +60,6 @@ struct RickAndMortyItem: View {
 }
 
 
-#Preview {
-    RickAndMortyItem(character: Character(id: 1, name: "Rick Sanches", status: "Live", species: "brasileiro", type: "", gender: "masculino", origin: Origin(name: "brasil", url: ""), location: Location(name: "Terra", url: ""), image: "https://rickandmortyapi.com/api/character/avatar/361.jpeg", episode: [""], url: "", created: "2020"))
-}
+//#Preview {
+//    RickAndMortyItem(character: Character(id: 1, name: "Rick Sanches", status: "Live", species: "brasileiro", type: "", gender: "masculino", origin: Origin(name: "brasil", url: ""), location: Location(name: "Terra", url: ""), image: "https://rickandmortyapi.com/api/character/avatar/361.jpeg", episode: [""], url: "", created: "2020"))
+//}

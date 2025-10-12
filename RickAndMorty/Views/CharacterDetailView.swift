@@ -11,7 +11,7 @@ import SwiftData
 
 struct CharacterDetailView: View {
     @ObservedObject var viewModel: CharacterDetailViewModel
-    @Environment (\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         ZStack {
             // Fundo gradiente cobrindo toda a tela
@@ -104,6 +104,20 @@ struct CharacterDetailView: View {
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue.opacity(0.7)))
                     }
+                    .simultaneousGesture(
+                        TapGesture().onEnded {
+                            // Cria o evento de ação ao favoritar
+                            let action = AnalyticsEvent.ActionEvent(
+                                actionName: viewModel.isFavorite ? "UnFavoriteCharacter": "FavoriteCharacter",
+                                context: viewModel.character.name,
+                                success: true
+                            )
+
+                            // Envia o evento para o sistema de analytics
+                            let event = AnalyticsEvent.actionPerformed(action)
+                            AnalyticsService.log(event: event, context: modelContext)
+                        }
+                    )
                     .padding()
                 }
                 }

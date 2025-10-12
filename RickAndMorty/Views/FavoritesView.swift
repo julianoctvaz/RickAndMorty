@@ -12,7 +12,7 @@ struct FavoritesView: View {
     @StateObject var viewModel = FavoritesViewModel()
     @Environment(\.dismiss) var dismiss
     var body: some View {
-        NavigationView{
+        NavigationView {
             
             VStack{
                 if viewModel.favorites.isEmpty{
@@ -32,7 +32,7 @@ struct FavoritesView: View {
                             .font(.headline)
                     }.swipeActions(edge: .trailing){
                         Button(role: .destructive) {
-                            viewModel.removeFavorite(favorite.id, context: modelContext)
+                            viewModel.removeFavorite(favorite.characterID, context: modelContext)
                         } label: {
                             Label("Remover", systemImage: "trash")
                         }

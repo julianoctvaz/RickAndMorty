@@ -6,7 +6,9 @@
 //
 
 import Foundation
-extension Date{
+
+extension Date {
+    
     func formattedDate(from dateString : String) ->String{
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions=[.withInternetDateTime,.withFractionalSeconds]
@@ -20,4 +22,8 @@ extension Date{
         }
         return "DATA INVALIDA"
     }
+    
+//    func toString(encoding: String.Encoding = .utf8) -> String {
+//        String(data: self, encoding: encoding) ?? "{}"
+//    }
 }

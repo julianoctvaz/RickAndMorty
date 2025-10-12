@@ -15,7 +15,7 @@ class CharacterDetailViewModel : ObservableObject{
     @Published var isFavorite : Bool = false
     init(character: Character,context :ModelContext) {
         self.character = character
-        self.isFavorite = favoriteService.isFavorite(characterId: character.id,context: context)
+        self.isFavorite = favoriteService.isFavorite(characterID: character.id,context: context)
         
     }
     func toggleFavorite(context:ModelContext){

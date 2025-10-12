@@ -9,12 +9,14 @@ import Foundation
 import SwiftData
 
 @Model
-class Favorite : Identifiable{
-    var id :Int
-    var name : String
-    var image:String
-    init(id: Int, name: String, image: String) {
-        self.id = id
+final class Favorite {
+    var id: UUID = UUID()
+    var characterID: Int = 10
+    var name: String = ""
+    var image: String = ""
+
+    init(characterID: Int, name: String, image: String) {
+        self.characterID = characterID
         self.name = name
         self.image = image
     }
