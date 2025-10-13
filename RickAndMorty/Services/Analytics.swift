@@ -191,33 +191,7 @@ extension Encodable {
 
 @MainActor
 enum SwiftDataStack {
-    /// Returns a ModelContainer configured with the provided schema.
-    /// Note: ModelConfiguration/CloudKit integration varies across SDKs. For now we create
-    /// a ModelContainer from the schema and rely on explicit CloudKit forwarding (AnalyticsService)
-    /// for public export. If you have a specific SDK that supports `.public` via ModelConfiguration,
-    /// we can extend this.
-    // Inicializa o ModelContainer fora do init, com fallback para .private se necessário
-//    
-//    public static func makeContainer(
-//        scope: CKDatabase.Scope = .private, // tem opcao publico, mas não funciona (?)
-//        containerIdentifier: String? = "iCloud.br.ufpe.academy.analytics",
-//        fallbackToPrivate: Bool = true
-//    ) throws -> ModelContainer {
-//        
-////        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
-//        let schema = Schema([Favorite.self, AnalyticsRecord.self])
-//        do {
-//            return try ModelContainer(for: schema)   // agora CloudKit consegue inicializar
-//        } catch {
-//            if fallbackToPrivate {
-//                print("CloudKit indisponível — rodando local")
-//                let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .none)
-//                return try ModelContainer(for: schema, configurations: [config])
-//            } else {
-//                throw error
-//            }
-//        }
-//    }
+
     public static func makeContainer() throws -> ModelContainer {
         let schema = Schema([Favorite.self, AnalyticsRecord.self])
         let config = ModelConfiguration(
