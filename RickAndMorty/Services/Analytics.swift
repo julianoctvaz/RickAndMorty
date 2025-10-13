@@ -5,9 +5,6 @@
 //  Created by Juliano on 12/10/25.
 //
 
-// Analytics.swift
-// Consolidated analytics core (AnyCodable, helpers, models, events, service, stack, errors)
-
 import Foundation
 import SwiftData
 import CloudKit
@@ -51,6 +48,7 @@ public struct AnyCodable: Codable {
 }
 
 // MARK: - Encodable -> [String: AnyCodable]
+
 extension Encodable {
     func asDictionary() throws -> [String: AnyCodable] {
         let data = try JSONEncoder().encode(self)
@@ -62,6 +60,7 @@ extension Encodable {
 }
 
 // MARK: - Data -> String
+
 public extension Data {
     func toString(encoding: String.Encoding = .utf8) -> String {
         String(data: self, encoding: encoding) ?? "{}"
@@ -69,6 +68,7 @@ public extension Data {
 }
 
 // MARK: - Analytics Models
+
 @Model
 final class AnalyticsRecord {
     var id: UUID = UUID()
@@ -100,8 +100,10 @@ final class PendingEvent {
 }
 
 // MARK: - Events
+
 enum AnalyticsEvent {
     case characterSelection(CharacterSelectedEvent)
+//    case favoriteCharacterSelection
     case screenView(ScreenViewEvent)
     case actionPerformed(ActionEvent)
     case custom(name: String, parameters: [String: AnyCodable] = [:])
@@ -109,6 +111,7 @@ enum AnalyticsEvent {
     var eventName: String {
         switch self {
         case .characterSelection: return "CharacterSelected"
+//        case  .favoriteCharacterSelection: return "favoriteCharacterSelected"
         case .screenView: return "ScreenView"
         case .actionPerformed: return "ActionPerformed"
         case .custom(let name, _): return name
@@ -118,13 +121,14 @@ enum AnalyticsEvent {
     func parameters() throws -> [String: AnyCodable] {
         switch self {
         case .characterSelection(let event): return try event.asDictionary()
+//        case .favoriteCharacterSelection(let event): return try event.asDictionary()
         case .screenView(let event): return try event.asDictionary()
         case .actionPerformed(let event): return try event.asDictionary()
         case .custom(_, let params): return params
         }
     }
     
-// MARK: - Event Payloads
+// MARK: - Event Payloads (Event Structs)
     
     struct CharacterSelectedEvent: Codable {
         let name: String
@@ -132,7 +136,7 @@ enum AnalyticsEvent {
         let date: String
     }
     
-//    struct FavoriteCharacterEvent: Codable {
+//    struct CharacterFavoriteSelectedEvent: Codable {
 //        let name: String
 //        let date: Double
 //    }
@@ -152,18 +156,21 @@ enum AnalyticsEvent {
 }
 
 // MARK: - Enum de telas
+
 enum Screens: String {
     case home = "Rick and Morty List (all characters)"
     case character = "Character Details"
 }
 
 // MARK: - AnalyticsError
+
 enum AnalyticsError: Error {
     case encoding(String),
          invalidDictionary(String)
 }
 
 // MARK: - Tranformação Encodable -> [String: String]
+
 extension Encodable {
     func asStringDictionary() throws -> [String:String] {
         do {
@@ -180,7 +187,8 @@ extension Encodable {
     }
 }
 
-// MARK: - SwiftData Stack (factory)
+// MARK: - SwiftData Stack
+
 @MainActor
 enum SwiftDataStack {
     /// Returns a ModelContainer configured with the provided schema.
@@ -189,17 +197,19 @@ enum SwiftDataStack {
     /// for public export. If you have a specific SDK that supports `.public` via ModelConfiguration,
     /// we can extend this.
     // Inicializa o ModelContainer fora do init, com fallback para .private se necessário
+    
     public static func makeContainer(
-        scope: CKDatabase.Scope = .private,
+        scope: CKDatabase.Scope = .private, // tem opcao publico, mas não funciona (?)
         containerIdentifier: String? = "iCloud.br.ufpe.academy.analytics",
         fallbackToPrivate: Bool = true
     ) throws -> ModelContainer {
+        
         let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
         do {
             return try ModelContainer(for: schema)   // agora CloudKit consegue inicializar
         } catch {
             if fallbackToPrivate {
-                print("⚠️ CloudKit indisponível — rodando local")
+                print("CloudKit indisponível — rodando local")
                 let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .none)
                 return try ModelContainer(for: schema, configurations: [config])
             } else {
@@ -213,7 +223,7 @@ enum SwiftDataStack {
 //            schema: schema,
 //            isStoredInMemoryOnly: false,
 //            cloudKitDatabase: .private("iCloud.br.ufpe.academy.analytics") //public nao tem! :( 
-//            cloudKitDatabase: .none        // 👈 desliga CloudKit totalmente
+//            cloudKitDatabase: .none        // <------- desliga CloudKit totalmente
 //        )
 //        return try ModelContainer(for: schema, configurations: [config])
 //    }
@@ -228,7 +238,8 @@ enum SwiftDataStack {
 //        return try ModelContainer(for: schema, configurations: [config])
 //    }}
 
-// MARK: - AnalyticsService (consolidated)
+// MARK: - AnalyticsService
+
 enum AnalyticsService {
     #if DEBUG
     private static let logger = Logger(subsystem: "br.ufpe.academy.analytics", category: "Analytics")

@@ -107,7 +107,7 @@ struct CharacterDetailView: View {
                     .simultaneousGesture(
                         TapGesture().onEnded {
                             // Cria o evento de ação ao favoritar
-                            let action = AnalyticsEvent.ActionEvent(
+                            let action = AnalyticsEvent.ActionEvent( //testando evento customizavem
                                 actionName: viewModel.isFavorite ? "UnFavoriteCharacter": "FavoriteCharacter",
                                 context: viewModel.character.name,
                                 success: true

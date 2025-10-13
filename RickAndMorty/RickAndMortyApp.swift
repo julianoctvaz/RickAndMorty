@@ -21,8 +21,6 @@ struct RickAndMortyApp: App {
             fatalError("❌ Failed to init ModelContainer: \(error)")
         }
     }()
-    
-
 
     init(){
         requestNotificationPermission() // solicita a permissão
