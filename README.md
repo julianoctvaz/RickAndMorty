@@ -1,5 +1,6 @@
 # ExchangeApp
 Aplicativo que consome e mostra os dados da api https://rickandmortyapi.com/documentation
+
 Autoria de código base: https://github.com/jamerson-macedo/
 
 # Funcionalidades
