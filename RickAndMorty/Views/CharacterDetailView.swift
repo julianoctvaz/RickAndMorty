@@ -102,6 +102,19 @@ struct CharacterDetailView: View {
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue.opacity(0.7)))
                     }
+                    .simultaneousGesture(
+                                            TapGesture().onEnded {
+                                                // Cria o evento de ação ao favoritar
+                                                let action = ActionEvent( // testan do evento customizavel
+                                                    actionName: viewModel.isFavorite ? "UnFavoriteCharacter": "FavoriteCharacter",
+                                                    context: viewModel.character.name,
+                                                    success: true
+                                                )
+                                                // Envia o evento para o sistema de analytics
+                                                let event = AnalyticsEvent.actionPerformed(action)
+                                                AnalyticsService.shared.log(event: event)
+                                            }
+                                        )
                     .padding()
                 }
                 }

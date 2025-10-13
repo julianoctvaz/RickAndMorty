@@ -7,6 +7,120 @@
 
 import FirebaseAnalytics
 
+
+// MARK: - Events
+
+enum AnalyticsEvent {
+    
+    case characterSelection(CharacterSelectedEvent)
+    case screenView(ScreenViewEvent)
+    case actionPerformed(ActionEvent)
+    case custom(name: String, parameters: [String: String] = [:])
+    
+    var eventName: String { //  case characterSelection // O rawValue padrão é "characterSelection" se nao quissemos ter esas var
+        switch self {
+        case .characterSelection: return "CharacterSelected"
+//        case .characterSelection: "characterSelection"
+//        case .characterSelection(_): // tanto faz
+//        case .characterSelection(let character): // tanto faz
+//            return "CharacterSelection:" + character.name + " \(character.origin)" + " " + "\(character.timestamp)"
+//            agora com interpolacao de strings, mas assim nao estamos salvando bem legal, vamos criar um dicionario ja pra ficar melhor!
+        case .screenView: return "ScreenView"
+        case .actionPerformed: return "ActionPerformed"
+        case .custom(let name, _): return name
+        }
+    }
+
+    func parameters() throws -> [String: String] {
+        switch self {
+        case .characterSelection(let event): return try event.asStringDictionary()
+        case .screenView(let event): return try event.asStringDictionary()
+        case .actionPerformed(let event): return try event.asStringDictionary()
+        case .custom(_, let params): return params
+        }
+    }
+        
+//assim nao precisa repetir o nome, mas Enum with raw type cannot have cases with arguments, nao poderia ter a struct dentro do case!
+//enum AnalyticsEvent: String {
+//        var eventName: String {
+//            return self.rawValue
+//        } // Retorna a string do case atual
+//    }
+    
+}
+
+
+struct CharacterFavoritedEvent: Codable {
+    var name: String
+    var isFavorited: Bool
+    var date: String
+}
+
+// MARK: - Screen Names
+
+enum Screens: String {
+    case home = "Rick and Morty View (List of all characters)"
+    case character = "Rick and Morty Item (Single chacracter)"
+}
+
+   
+// MARK: - Event Structs (Payloads)
+   
+struct CharacterSelectedEvent: Codable { //para pegar do json!
+//    struct CharacterSelectedEvent: Decodable { //para pegar do json! (receber dados)
+//    struct CharacterSelectedEvent: Encodable { //para pegar do json! -> Se tiver certeza q so vai codificar e nao decodificar (enviar dados)
+//    Codable=Encodable+Decodable
+    
+       let name: String
+       let origin: String
+       let date: String
+   }
+   
+    struct FavoriteCharacterEvent: Codable {
+        let name: String
+        let isFavorited: Bool
+        let date: String
+    }
+   
+struct ScreenViewEvent: Codable {
+       let screenName: String
+       let duration: Double
+       let userTier: String
+   }
+
+struct ActionEvent: Codable {
+       let actionName: String
+       let context: String
+       let success: Bool
+   }
+
+
+// MARK: - AnalyticsError
+
+enum AnalyticsError: Error {
+   case encoding(String),
+        invalidDictionary(String)
+}
+
+// MARK: - Tranformação Encodable -> [String: String] // Sem tratar direito os erros
+
+extension Encodable {
+   func asStringDictionary() throws -> [String:String] {
+       do {
+           let data = try JSONEncoder().encode(self)
+           guard let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+               throw AnalyticsError.invalidDictionary("JSON não é dicionário de topo.")
+           }
+           return dict.mapValues { "\($0)" }
+       } catch let e as EncodingError {
+           throw AnalyticsError.encoding("Falha ao codificar: \(e)")
+       } catch {
+           throw AnalyticsError.invalidDictionary("Falha: \(error.localizedDescription)")
+       }
+   }
+}
+
+
 //MARK: - Refatorada
 
 /*
@@ -81,6 +195,8 @@ class AnalyticsService {
         switch event {
                     case .characterSelection(let characterSelectionEvent):
             
+            // Tratando o dado dentro do case, mas podemos tratar fora tambem como veremos com a funcao parameters que chama asDictionaryStrings
+            
                         // MARK: - Passo 1: Codificar o seu objeto Swift (characterSelectionEvent) em Data (bytes JSON)
                         do {
             
@@ -122,7 +238,28 @@ class AnalyticsService {
                         } catch {
                             print("Erro na serialização/deserialização: \(error.localizedDescription)")
                         }
-                    }
+            
+        case .screenView(_):
+            do {
+                parameters = try event.parameters()
+            }
+            catch {
+                print("❌ Erro ao logar evento \(event): \(error.localizedDescription)")
+            }
+            
+        case .actionPerformed(_):
+            do {
+                parameters = try event.parameters()
+            }
+            catch {
+                print("❌ Erro ao logar evento \(event): \(error.localizedDescription)")
+            }
+            
+        case .custom(name: let name, parameters: let parameters2):
+//            do {
+                parameters = parameters2
+//            }
+        }
             
             
              // MARK: - Passo 3: Enviar dicionario para firebase
@@ -133,51 +270,4 @@ class AnalyticsService {
         
         }
     
-}
-
-enum AnalyticsEvent {
-//    case characterSelecion(String)
-//    
-//    var eventName: String {
-//        switch self {
-//            case .characterSelecion(let character): return "CharacterSelection:" + character
-//            // nao precisa do retorno
-//        }
-//    }
-    
-    case characterSelection(CharacterSelectedEvent)
-    
-    var eventName: String { //  case characterSelection // O rawValue padrão é "characterSelection" se nao quissemos ter esas var
-        switch self {
-        case .characterSelection: "characterSelection"
-            //        case .characterSelection(_): // tanto faz
-            //        case .characterSelection(let character): // tanto faz
-            //            return "CharacterSelection:" + character.name + " \(character.origin)" + " " + "\(character.timestamp)"
-            //            agora com interpolacao de strings, mas assim nao estamos salvando bem legal, vamos criar um dicionario ja pra ficar melhor!
-            //            return "characterSelection"
-        }
-    }
-        
-//assim nao precisa repetir o nome, mas Enum with raw type cannot have cases with arguments, nao poderia ter a struct dentro do case!
-//enum AnalyticsEvent: String {
-//        var eventName: String {
-//            return self.rawValue
-//        } // Retorna a string do case atual
-//    }
-    
-}
-
-struct CharacterSelectedEvent: Codable { //para pegar do json!
-//    struct CharacterSelectedEvent: Decodable { //para pegar do json! (receber dados)
-//    struct CharacterSelectedEvent: Encodable { //para pegar do json! -> Se tiver certeza q so vai codificar e nao decodificar (enviar dados)
-//    Codable=Encodable+Decodable
-    
-    var name: String
-    var origin: String
-    var date: String
-}
-
-enum Screens: String {
-    case home = "Rick and Morty View (List of all characters)"
-    case character = "Rick and Morty Item (Single chacracter)"
 }
