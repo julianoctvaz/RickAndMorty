@@ -197,47 +197,38 @@ enum SwiftDataStack {
     /// for public export. If you have a specific SDK that supports `.public` via ModelConfiguration,
     /// we can extend this.
     // Inicializa o ModelContainer fora do init, com fallback para .private se necessário
-    
-    public static func makeContainer(
-        scope: CKDatabase.Scope = .private, // tem opcao publico, mas não funciona (?)
-        containerIdentifier: String? = "iCloud.br.ufpe.academy.analytics",
-        fallbackToPrivate: Bool = true
-    ) throws -> ModelContainer {
-        
-//        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
-        let schema = Schema([Favorite.self, AnalyticsRecord.self])
-        do {
-            return try ModelContainer(for: schema)   // agora CloudKit consegue inicializar
-        } catch {
-            if fallbackToPrivate {
-                print("CloudKit indisponível — rodando local")
-                let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .none)
-                return try ModelContainer(for: schema, configurations: [config])
-            } else {
-                throw error
-            }
-        }
-    }
-//    public static func makeContainer() throws -> ModelContainer {
-//        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
-//        let config = ModelConfiguration(
-//            schema: schema,
-//            isStoredInMemoryOnly: false,
-//            cloudKitDatabase: .private("iCloud.br.ufpe.academy.analytics") //public nao tem! :( 
-//            cloudKitDatabase: .none        // <------- desliga CloudKit totalmente
-//        )
-//        return try ModelContainer(for: schema, configurations: [config])
+//    
+//    public static func makeContainer(
+//        scope: CKDatabase.Scope = .private, // tem opcao publico, mas não funciona (?)
+//        containerIdentifier: String? = "iCloud.br.ufpe.academy.analytics",
+//        fallbackToPrivate: Bool = true
+//    ) throws -> ModelContainer {
+//        
+////        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
+//        let schema = Schema([Favorite.self, AnalyticsRecord.self])
+//        do {
+//            return try ModelContainer(for: schema)   // agora CloudKit consegue inicializar
+//        } catch {
+//            if fallbackToPrivate {
+//                print("CloudKit indisponível — rodando local")
+//                let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .none)
+//                return try ModelContainer(for: schema, configurations: [config])
+//            } else {
+//                throw error
+//            }
+//        }
 //    }
+    public static func makeContainer() throws -> ModelContainer {
+        let schema = Schema([Favorite.self, AnalyticsRecord.self])
+        let config = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .private("iCloud.br.ufpe.academy.analytics"), //public nao tem! :(
+            
+        )
+        return try ModelContainer(for: schema, configurations: [config])
+    }
 }
-//     Mude o makeContainer() temporariamente para um container sem CloudKit, apenas local
-//    public static func makeContainer() throws -> ModelContainer {
-//        let schema = Schema([AnalyticsRecord.self, PendingEvent.self])
-//        let config = ModelConfiguration(
-//            schema: schema,
-//            cloudKitDatabase: .public("iCloud.br.ufpe.academy.analytics")
-//        )
-//        return try ModelContainer(for: schema, configurations: [config])
-//    }}
 
 // MARK: - AnalyticsService
 
