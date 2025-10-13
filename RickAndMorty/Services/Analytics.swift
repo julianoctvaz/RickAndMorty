@@ -84,20 +84,20 @@ final class AnalyticsRecord {
     }
 }
 
-@Model
-final class PendingEvent {
-    var id: UUID = UUID()
-    var name: String = ""
-    var parametersJSON: String = "{}"
-    var createdAt: Date = Date()
-
-    init(name: String, parameters: [String: AnyCodable]) throws {
-        self.id = UUID()
-        self.name = name
-        self.createdAt = Date()
-        self.parametersJSON = try JSONEncoder().encode(parameters).toString()
-    }
-}
+//@Model
+//final class PendingEvent {
+//    var id: UUID = UUID()
+//    var name: String = ""
+//    var parametersJSON: String = "{}"
+//    var createdAt: Date = Date()
+//
+//    init(name: String, parameters: [String: AnyCodable]) throws {
+//        self.id = UUID()
+//        self.name = name
+//        self.createdAt = Date()
+//        self.parametersJSON = try JSONEncoder().encode(parameters).toString()
+//    }
+//}
 
 // MARK: - Events
 
@@ -204,7 +204,8 @@ enum SwiftDataStack {
         fallbackToPrivate: Bool = true
     ) throws -> ModelContainer {
         
-        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
+//        let schema = Schema([Favorite.self, AnalyticsRecord.self, PendingEvent.self])
+        let schema = Schema([Favorite.self, AnalyticsRecord.self])
         do {
             return try ModelContainer(for: schema)   // agora CloudKit consegue inicializar
         } catch {
@@ -247,7 +248,7 @@ enum AnalyticsService {
 
     /// When true, events will also be forwarded to the PUBLIC CloudKit database (AcademyEvent recordType).
     /// Enable in the App when you want exportability via CloudKit Dashboard.
-    public static var forwardToPublicCloudKit: Bool = true
+    /// 
     public static var cloudKitContainer: CKContainer = .default()
 
     /// Logs an analytics event into the provided ModelContext.
@@ -266,9 +267,8 @@ enum AnalyticsService {
                 logger.info("✅ Event '\(event.eventName, privacy: .public)' saved with params: \(jsonString, privacy: .public)")
                 #endif
 
-                if forwardToPublicCloudKit {
-                    Task { await sendToCloudKit(event: event) }
-                }
+                
+                Task { await sendToCloudKit(event: event) }
 
             } catch {
                 #if DEBUG

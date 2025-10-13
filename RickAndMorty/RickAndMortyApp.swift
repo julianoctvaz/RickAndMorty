@@ -28,7 +28,6 @@ struct RickAndMortyApp: App {
         // Configura o AnalyticsService para encaminhar eventos ao CloudKit público
         // (AnalyticsService.cloudKitContainer e forwardToPublicCloudKit estão definidos em Analytics)
         AnalyticsService.cloudKitContainer = CKContainer(identifier: "iCloud.br.ufpe.academy.analytics")
-        AnalyticsService.forwardToPublicCloudKit = true
         
         CKContainer.default().accountStatus { status, error in
             switch status {
