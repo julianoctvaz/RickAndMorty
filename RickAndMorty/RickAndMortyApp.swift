@@ -25,38 +25,12 @@ struct RickAndMortyApp: App {
     init(){
         requestNotificationPermission() // solicita a permissão
 
-        // Configura o AnalyticsService para encaminhar eventos ao CloudKit público
-        // (AnalyticsService.cloudKitContainer e forwardToPublicCloudKit estão definidos em Analytics)
         AnalyticsService.cloudKitContainer = CKContainer(identifier: "iCloud.br.ufpe.academy.analytics")
         
         CKContainer.default().accountStatus { status, error in
             switch status {
             case .available:
                 print("✅ iCloud disponível e autenticado.")
-                // 🔽 Aqui você adiciona a consulta
-                Task {
-                    do {
-                        let container = CKContainer(identifier: "iCloud.br.ufpe.academy.analytics")
-                        let database = container.privateCloudDatabase
-                        
-                        // Query simples pra forçar criação do índice se ele não existir
-                        let query = CKQuery(recordType: "CD_AnalyticsRecord", predicate: NSPredicate(value: true))
-                        query.sortDescriptors = [NSSortDescriptor(key: "CD_timestamp", ascending: false)]
-                        
-                        let operation = CKQueryOperation(query: query)
-                        operation.resultsLimit = 1
-                        
-                        operation.queryResultBlock = { result in
-                            switch result {
-                            case .success:
-                                print("✅ Query index confirmed for recordName.")
-                            case .failure(let error):
-                                print("❌ Error confirming index: \(error.localizedDescription)")
-                            }
-                        }
-                        database.add(operation)
-                    }
-                }
             case .noAccount:
                 print("⚠️ Nenhuma conta iCloud configurada.")
             case .restricted:
