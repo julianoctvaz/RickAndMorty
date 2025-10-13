@@ -3,6 +3,14 @@ Aplicativo que consome e mostra os dados da api https://rickandmortyapi.com/docu
 
 Autoria de código base: https://github.com/jamerson-macedo/
 
+As modificações feitas envolvem a inserção de analytics no projetos, há uma estrutura de dados padrão para evento a ser disparado. 
+
+Os eventos exemplares são são chamados de characterSelection e favoriteCharacterSelection. 
+
+Os parametros são com base em cada estrutura de dados vinda do hand-off com o time design/négócios para tagueamento. Assim se cria um dicionário dinâmico.
+
+
+
 # Funcionalidades
 - Listagem de personagens
 - busca de personagens
