@@ -120,58 +120,6 @@ extension Encodable {
    }
 }
 
-
-//MARK: - Refatorada
-
-/*
-extension Encodable {
-    func transformParametersToDictionary() throws -> [String: Any]? {
-        // 1. Codifica (Struct -> Data)
-        let data = try JSONEncoder().encode(self)
-        
-        // 2. Deserializa (Data -> Dicionário)
-        return try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any]
-    }
-}
-
-class AnalyticsService {
-    
-    private init() {}
-    
-    static let shared = AnalyticsService()
-    
-    public func log(screen: String, event: AnalyticsEvent) {
-        
-        
-        switch event {
-            
-        case .characterSelection(let characterSelectionEvent):
-            do {
-                // Usa a extensão para ir de Struct -> Dicionário em uma linha
-                if let dictParameters = try characterSelectionEvent.transformParametersToDictionary() {
-                    Analytics.logEvent(event.eventName, parameters: dictParameters)
-                } else {
-                    // O JSON foi lido, mas não era um Dicionário de nível superior (ex: era um Array).
-                    print("Erro de formato: O JSON do evento '\(event.eventName)' foi decodificado, mas não era um dicionário ([String: Any]).")
-                    
-                }
-            } catch {
-                //                Lembrando que catch só é ativado se a função lançar (throw) um erro, e não se ela retornar nil, se for nil é pq nao conseguiu transformar em dicionario, ai entra no else!
-                print("Erro na Codificação (JSONEncoder) ou Desserialização (JSONSerialization) do evento para dicionário: \(error.localizedDescription)") // ja que a funcao transforms pode lançar (throws) um erro tanto do JSONEncoder quando JSONSerialization.
-            }
-        }//switch
- 
-     print("Event tracked: \(event.eventName) | params: \(parameters)" )
- 
-     Analytics.logEvent(event.eventName, parameters: parameters)
-        
-    } // fim funcao
-    
-} //classe
-
- */
-
-// MARK: - Sem ser refatorada
             
 ///  Service to handle app analytics
 class AnalyticsService {
