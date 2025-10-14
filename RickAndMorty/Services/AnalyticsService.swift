@@ -203,7 +203,7 @@ class AnalyticsService {
                 print("❌ Erro ao logar evento \(event): \(error.localizedDescription)")
             }
             
-        case .custom(name: let name, parameters: let parameters2):
+        case .custom(name: _, parameters: let parameters2):
 //            do {
                 parameters = parameters2
 //            }
