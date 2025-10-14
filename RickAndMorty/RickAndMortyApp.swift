@@ -9,17 +9,10 @@ import SwiftUI
 import SwiftData
 @main
 struct RickAndMortyApp: App {
-    // verificando se foi inicalizado com sucesso
-//    init() {
-//            do {
-//                let modelContainer = try ModelContainer(for: Favorite.self)
-//                print("ModelContainer initialized successfully")
-//            } catch {
-//                print("Failed to initialize ModelContainer: \(error)")
-//            }
-//        }
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appdelegate
     // fazendo a ponte entre swiftui e uikit
+    
     init(){
         requestNotificationPermission() // solicita a permissão
     }
@@ -30,7 +23,7 @@ struct RickAndMortyApp: App {
         }
     }
     private func requestNotificationPermission(){
-        // .alert e os demais são os tipos de eprmissoes
+        // .alert e os demais são os tipos de permissoes
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]){ granted, error in
             if let error = error {
                 print(error.localizedDescription)
