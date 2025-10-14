@@ -11,7 +11,7 @@ import SwiftData
 
 struct CharacterDetailView: View {
     @ObservedObject var viewModel: CharacterDetailViewModel
-    @Environment (\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         ZStack {
             // Fundo gradiente cobrindo toda a tela
