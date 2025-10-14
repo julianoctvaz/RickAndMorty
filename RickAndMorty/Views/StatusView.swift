@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StatusView: View {
+    
     let status: String
     
     var body: some View {

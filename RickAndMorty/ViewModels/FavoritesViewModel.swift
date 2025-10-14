@@ -7,9 +7,12 @@
 
 import Foundation
 import SwiftData
+
 class FavoritesViewModel : ObservableObject{
+    
     @Published var favorites = [Favorite]()
     private var favoriteService = FavoriteService()
+    
     func loadFavorites(context:ModelContext){
         favorites = favoriteService.fetchFavorites(context: context)
     }

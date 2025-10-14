@@ -5,8 +5,14 @@
 //  Created by Jamerson Macedo on 24/08/24.
 //
 
+/*
+ DTO significa Data Transfer Object —
+é um objeto de transferência de dados usado para representar a resposta exata que vem da API (ou do banco, etc),
+antes de ela ser convertida para o modelo interno do app.
+RESPOSTA DA API
+*/
+ 
 import Foundation
-// RESPOSTA DA API
 
 struct CharacterResponseDTO: Decodable {
     let results: [CharacterDTO]

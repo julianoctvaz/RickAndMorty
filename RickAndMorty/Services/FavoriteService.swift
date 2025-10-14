@@ -1,8 +1,16 @@
+//
+//  FavoriteService.swift
+//  RickAndMorty
+//
+//  Created by Jamerson Macedo on 24/08/24.
+//
+
 import SwiftData
 import SwiftUI
+
 class FavoriteService {
     
-    func addFavorite(characterID: Int,name : String, image:String, context: ModelContext) {
+    func addFavorite(characterID: Int,name: String, image:String, context: ModelContext) {
         // preenche os favoritos e insere no banco
         let newFavorite = Favorite(id: characterID, name: name, image: image)
         context.insert(newFavorite)
@@ -22,7 +30,7 @@ class FavoriteService {
         }
         
     }
-    func isFavorite(characterId:Int,context:ModelContext) ->Bool{
+    func isFavorite(characterId: Int, context: ModelContext) ->Bool{
         let descriptor = FetchDescriptor<Favorite>(
             predicate: #Predicate{$0.id == characterId})
         return (try? context.fetch(descriptor))?.isEmpty == false // se o usuario ja ta na lista
@@ -33,7 +41,7 @@ class FavoriteService {
         let descriptor = FetchDescriptor<Favorite>()
         return (try? context.fetch(descriptor)) ?? []
     }
-    private func notification(characterName : String){
+    private func notification(characterName: String){
         let content = UNMutableNotificationContent()
         content.title = "Novo Favorito"
         content.body = "\(characterName) foi adicionado aos seus favoritos"
@@ -43,9 +51,9 @@ class FavoriteService {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false) // dispara a notificacao em 1 seg e nao repete
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request){ error in
-            if let error = error{
+            if let error = error {
                 print(error.localizedDescription)
-            }else {
+            } else {
                 print("adicionado")
             }
             

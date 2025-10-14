@@ -7,9 +7,12 @@
 
 import Foundation
 import Combine
-class RickAndMortyViewModel : ObservableObject{
+
+class RickAndMortyViewModel: ObservableObject {
+    
     // quando o viewmodel tem a referencia do service eles criam uma referencia forte
-    // e se a viewfechar o viewmodel sai e a referencia e perdida, por isso usa weal self
+    // e se a viewfechar o viewmodel sai e a referencia e perdida, por isso usa weak self
+    
     @Published var characters  = [Character]()
     @Published var isloading = false
     @Published var errorMessage :String? = nil
@@ -44,19 +47,21 @@ class RickAndMortyViewModel : ObservableObject{
             self?.characters.append(contentsOf: response)
             self?.currentPage += 1
         }.store(in: &cancelable)
-        
-
     }
+    
     func loadMoreCharacters( currentItem : Character?){
         guard shouldLoadMore(currentItem:currentItem) else {return}
         fetchCharacters()
     }
+    
     private var canLoadMoreCharacters:Bool{
         !isloading
     }
+    
     private func handleError(_ error : Error){
         errorMessage = error.localizedDescription
     }
+    
     private func shouldLoadMore(currentItem:Character?)->Bool{
         // tem o item ? então carregue
         guard let currentItem = currentItem else {return true }

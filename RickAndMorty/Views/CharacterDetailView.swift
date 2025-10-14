@@ -5,13 +5,15 @@
 //  Created by Jamerson Macedo on 24/08/24.
 //
 
-// CharacterDetailView.swift
+
 import SwiftUI
 import SwiftData
 
 struct CharacterDetailView: View {
+    
     @ObservedObject var viewModel: CharacterDetailViewModel
     @Environment(\.modelContext) private var modelContext
+    
     var body: some View {
         ZStack {
             // Fundo gradiente cobrindo toda a tela
@@ -59,6 +61,7 @@ struct CharacterDetailView: View {
                     
                     // Organizar as informações em colunas com ícones
                     VStack(spacing: 16) {
+                        
                         HStack {
                             InfoCard(title: "Espécie", value: viewModel.character.species, iconName: "leaf.arrow.circlepath")
                             if !viewModel.character.type.isEmpty {
@@ -69,17 +72,15 @@ struct CharacterDetailView: View {
                             InfoCard(title: "Gênero", value: viewModel.character.gender, iconName: genderIcon)
                             InfoCard(title: "Origem", value: viewModel.character.origin.name, iconName: "globe")
                         }
+                        
                         InfoCard(title: "Última Localização", value: viewModel.character.location.name, iconName: "mappin.and.ellipse")
                         InfoCard(title: "Criado em", value:Date().formattedDate(from: viewModel.character.created), iconName: "calendar")
+                        
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Apareceu em \(viewModel.character.episode.count) episódio(s)")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                            
-                           
                         }
-                        
-                        
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 15)
@@ -87,10 +88,10 @@ struct CharacterDetailView: View {
                         )
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                         
-                        
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 20)
+                    
                     Button(action: {
                         viewModel.toggleFavorite(context: modelContext)
                     }) {

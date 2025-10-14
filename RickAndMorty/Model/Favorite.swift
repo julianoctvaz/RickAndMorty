@@ -9,10 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-class Favorite : Identifiable{
-    var id :Int
+class Favorite: Identifiable {
+    
+    var id: Int
     var name : String
-    var image:String
+    var image: String
+    
     init(id: Int, name: String, image: String) {
         self.id = id
         self.name = name

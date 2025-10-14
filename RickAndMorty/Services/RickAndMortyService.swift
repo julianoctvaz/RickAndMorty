@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import Combine
+
 class RickAndMortyService {
     // retorna o character responsa sem ser [], pois aqui retorna tudo de uma vez
     func getAllCaracters(page : Int)->AnyPublisher<[Character],Error> {

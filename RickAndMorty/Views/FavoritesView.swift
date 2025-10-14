@@ -7,10 +7,13 @@
 
 import SwiftUI
 import SwiftData
+
 struct FavoritesView: View {
+    
     @Environment(\.modelContext) private var modelContext
     @StateObject var viewModel = FavoritesViewModel()
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         NavigationView{
             
@@ -55,6 +58,6 @@ struct FavoritesView: View {
     }
 }
 
-#Preview {
-    FavoritesView()
-}
+//#Preview {
+//    FavoritesView()
+//}

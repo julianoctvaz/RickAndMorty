@@ -62,6 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A584C212E9DD89A00514ED1 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				CF422F3A2C79D3210099BAA8 /* CharacterError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		CF422F0E2C6FF6950099BAA8 = {
 			isa = PBXGroup;
 			children = (
@@ -128,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				CF422F2E2C6FF7E80099BAA8 /* RickAndMortyService.swift */,
-				CF422F3A2C79D3210099BAA8 /* CharacterError.swift */,
 				CF422F4B2C7E06020099BAA8 /* FavoriteService.swift */,
 			);
 			path = Services;
@@ -140,6 +147,7 @@
 				CF422F312C6FF9000099BAA8 /* Character.swift */,
 				CF422F372C79D2120099BAA8 /* CharacterResponseDTO.swift */,
 				CF422F492C7E05B60099BAA8 /* Favorite.swift */,
+				3A584C212E9DD89A00514ED1 /* Error */,
 			);
 			path = Model;
 			sourceTree = "<group>";

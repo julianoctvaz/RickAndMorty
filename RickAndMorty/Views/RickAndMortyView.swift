@@ -7,15 +7,20 @@
 
 import SwiftUI
 import SwiftData
+
 struct RickAndMortyView: View {
     // pra não perder a referencia e ser recriado é melhor usar o StateObject
-    // se p viewmodel fosse passado como parametro para a lista ai sim usaria o Observed
-    @StateObject var viewmodel : RickAndMortyViewModel
+    // se a viewmodel fosse passado como parametro para a lista ai sim usaria o Observed
+    
+    @StateObject var viewmodel: RickAndMortyViewModel
+
     @State private var searchText = ""
+    @State var showFavorites : Bool =  false
+
     @Environment(\.modelContext) var modelContext
+
     let gridItems = [GridItem(.flexible()),GridItem(.flexible())]
     
-   @State var showFavorites : Bool =  false
     var filteredCharacters : [Character]{
         if searchText.isEmpty{
             return viewmodel.characters
@@ -23,6 +28,7 @@ struct RickAndMortyView: View {
             return viewmodel.characters.filter{$0.name.lowercased().contains(searchText.lowercased())}
         }
     }
+    
     var body: some View {
         NavigationView {
             VStack {
