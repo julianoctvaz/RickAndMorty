@@ -47,7 +47,7 @@ class Aula {
             print(1)
         case .actionPerformed(_):
             print(1)
-        case .custom(name: let name, parameters: let parameters):
+        case .custom(name: _, parameters: _):
             print(1)
         }
         

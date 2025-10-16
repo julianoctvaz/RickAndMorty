@@ -7,6 +7,8 @@
 
 import FirebaseAnalytics
 
+// MARK: - AnalyticsService (Temeletry with tags for analytic analasys and metrics)
+
 ///  Service to handle app analytics
 class AnalyticsService {
 
@@ -117,16 +119,22 @@ enum AnalyticsEvent {
         // O rawValue padrão é "characterSelection" se nao quissemos ter esas var
         switch self {
         case .characterSelection: return "CharacterSelected"
-//        case .characterSelection: "characterSelection"
-//        case .characterSelection(_): // tanto faz
-//        case .characterSelection(let character): // tanto faz
-//            return "CharacterSelection:" + character.name + " \(character.origin)" + " " + "\(character.timestamp)"
-//            agora com interpolacao de strings, mas assim nao estamos salvando bem legal, vamos criar um dicionario ja pra ficar melhor!
+            //        case .characterSelection: "characterSelection"
+            //        case .characterSelection(_): // tanto faz
+            //        case .characterSelection(let character): // tanto faz
+            //            return "CharacterSelection:" + character.name + " \(character.origin)" + " " + "\(character.timestamp)"
+            //            agora com interpolacao de strings, mas assim nao estamos salvando bem legal, vamos criar um dicionario ja pra ficar melhor!
         case .screenView: return "ScreenView"
         case .actionPerformed: return "ActionPerformed"
         case .custom(let name, _): return name
         }
     }
+        
+        //assim nao precisa repetir o nome, mas Enum with raw type cannot have cases with arguments, nao poderia ter a struct dentro do case!
+//    var eventName: String {
+//        return self.rawValue
+//     }  // Retorna a string do case atual
+
 
     func parameters() throws -> [String: Any] {
         switch self {
@@ -136,13 +144,6 @@ enum AnalyticsEvent {
         case .custom(_, let params): return params
         }
     }
-        
-//assim nao precisa repetir o nome, mas Enum with raw type cannot have cases with arguments, nao poderia ter a struct dentro do case!
-//enum AnalyticsEvent: String {
-//        var eventName: String {
-//            return self.rawValue
-//        } // Retorna a string do case atual
-//    }
 }
 
 struct CharacterFavoritedEvent: Codable {
@@ -158,7 +159,6 @@ enum Screens: String {
     case character = "Rick and Morty Item (Single chacracter)"
 }
 
-   
 // MARK: - Event Structs (Payloads)
    
 struct CharacterSelectedEvent: Codable { //para pegar & receber do json!
