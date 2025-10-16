@@ -7,7 +7,7 @@
 
 import FirebaseAnalytics
 
-// MARK: - AnalyticsService (Temeletry with tags for analytic analasys and metrics)
+// MARK: - AnalyticsService (Telemetry with tags for analytic analasys and metrics)
 
 ///  Service to handle app analytics
 class AnalyticsService {
