@@ -160,6 +160,7 @@ enum Screens: String {
 }
 
 // MARK: - Event Structs (Payloads)
+// Em uma requisição HTTP, o payload é a parte principal dos dados que está sendo enviada do cliente para o servidor, contendo a informação que a requisição precisa para ser processada, como dados de um formulário, um arquivo ou um objeto JSON
    
 struct CharacterSelectedEvent: Codable { //para pegar & receber do json!
 //    struct CharacterSelectedEvent: Decodable { //para pegar do json! (receber dados)
