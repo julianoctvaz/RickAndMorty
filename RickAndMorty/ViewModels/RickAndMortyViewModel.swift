@@ -6,8 +6,11 @@
 //
 
 import Combine
+<<<<<<< Updated upstream
 import Foundation
 
+=======
+>>>>>>> Stashed changes
 class RickAndMortyViewModel: ObservableObject{
     // quando o viewmodel tem a referencia do service eles criam uma referencia forte
     // e se a viewfechar o viewmodel sai e a referencia e perdida, por isso usa weak self

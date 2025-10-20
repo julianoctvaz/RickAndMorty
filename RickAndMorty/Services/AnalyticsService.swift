@@ -89,18 +89,18 @@ enum AnalyticsService {
     // MARK: - Tempo de tela (duration signals)
     
     
-//    static func startScreen(_ screen: Screens) {
-//        TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
-//    }
+    static func startScreen0(_ screen: Screen) {
+        TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
+    }
     //    Error! Ou seja: ele precisa rodar na Main Thread, e o compilador não deixa você chamar de um contexto que possa ser background. "Call to main actor-isolated static method 'stopAndSendDurationSignal(_:parameters:floatValue:customUserID:)' in a synchronous nonisolated context"
             
     //MARK: - Forma 1:
-    //Aqui a gente está dizendo para o Swift: “Espere até ter acesso à thread principal, e aí rode essa parte do código.” É o mesmo que pedir licença pra entrar no main thread. Mesmo podendo ser "pausada" por ser uma funcao async (roda em qq thread), dentro dela falamos pra rodar na main.
-//    static func startScreen(_ screen: Screens) async {
-//        await MainActor.run {
-//            TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
-//        }
-//    }
+//    Aqui a gente está dizendo para o Swift: “Espere até ter acesso à thread principal, e aí rode essa parte do código.” É o mesmo que pedir licença pra entrar no main thread. Mesmo podendo ser "pausada" por ser uma funcao async (roda em qq thread), dentro dela falamos pra rodar na main.
+    static func startScreen1(_ screen: Screen) async {
+        await MainActor.run {
+            TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
+        }
+    }
     
     //MARK: - Forma 2:
    /*  Aqui o Swift cria uma mini thread temporária (uma Task) para executar este código de forma assíncrona.
@@ -110,25 +110,26 @@ enum AnalyticsService {
         - Se for criada dentro de um contexto neutro (ex: um service ou model), ela NÃO herda o MainActor e o compilador pode reclamar ao chamar funções marcadas como @MainActor.
     A anotação @MainActor in dentro da Task é o que garante explicitamente que o bloco rode na main thread. Mesmo que a funcao na documentacao esteja com anotacao ele n vai inferir!
     */
-//    static func startScreen(_ screen: Screens) {
-//        Task { @MainActor in //isolamos o ator ao colocar assim, nao é lista de captura como em closures é uma clausula de isolamento de ator(qual thread) isso ficou mais forte no swift 5.9, ja q concorrencia foi lancada no 5.5 (ver Strict Concurrency Checking), sem a clausula ele ate funciona mas poderia gerar um erro em tempo de execucao ou travar o app, ou simplesmente nao enviar para o telemetry. "roda mais nao envia
-//            TelemetryDeck.startDurationSignal(screen.rawValue)
-//        }
-//    }
+    static func startScreen2(_ screen: Screen) {
+        Task { @MainActor in
+        //isolamos o ator ao colocar assim, nao é lista de captura como em closures é uma clausula de isolamento de ator(qual thread) isso ficou mais forte no swift 5.9, ja q concorrencia foi lancada no 5.5 (ver Strict Concurrency Checking), sem a clausula ele ate funciona mas poderia gerar um erro em tempo de execucao ou travar o app, ou simplesmente nao enviar para o telemetry. "roda mais nao envia
+            TelemetryDeck.startDurationSignal(screen.rawValue)
+        }
+    }
 
         
     //MARK: - Forma 3:
     //dizemos a fila principal do sistema: assim que puder, roda esse código pra mim (pre-concurrency, modo tradicional)
-//    static func startScreen(_ screen: Screens) {
-//        DispatchQueue.main.async {
-//            TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
-//        }
-//    }
+    static func startScreen3(_ screen: Screen) {
+        DispatchQueue.main.async {
+            TelemetryDeck.stopAndSendDurationSignal("ScreenTime", parameters: ["screen": "Home"])
+        }
+    }
     
     //MARK: - Forma 4:
 //    Aqui a gente “prega uma plaquinha na porta” da função dizendo: “tudo que acontecer aqui dentro roda na thread principal”.
     @MainActor
-    static func startScreen(_ screen: Screen) {
+    static func startScreen4(_ screen: Screen) {
          TelemetryDeck.startDurationSignal(screen.rawValue)
     }
     
